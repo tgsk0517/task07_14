@@ -15,7 +15,7 @@ public:
 	float Getvec_y() { return vec_y; }
 	float Setvec_y(float n) { return vec_y = n; }
 
-	Vector2(float n1,float n2)
+	Vector2(float n1, float n2)
 	{
 		Setvec_x(n1);
 		Setvec_y(n2);
@@ -28,7 +28,7 @@ private:
 
 float Distance(Vector2 vec1, Vector2 vec2)
 {
-	float answer = sqrt( (vec2.Getvec_x() - vec1.Getvec_x()) * ((vec2.Getvec_x() - vec1.Getvec_x()) + ((vec2.Getvec_y() - vec1.Getvec_y()) * ((vec2.Getvec_y() - vec1.Getvec_y())))));
+	float answer = sqrt((vec2.Getvec_x() - vec1.Getvec_x()) * ((vec2.Getvec_x() - vec1.Getvec_x()) + ((vec2.Getvec_y() - vec1.Getvec_y()) * ((vec2.Getvec_y() - vec1.Getvec_y())))));
 	printf("%f\n", answer);
 
 	return answer;
@@ -53,70 +53,67 @@ private:
 struct Deck
 {
 public:
-	//カード情報設定
-	Deck(Card cardList[CARDNUM])
+	Deck()
 	{
-		for (int i = 0; i < CARDNUM; i++)
-		{
-			c[i] = cardList[i];
-		}
+		CardSetting();
+	}
 
+	//カード情報設定
+	void CardSetting()
+	{
 		for (int i = 0; i < 13; i++)
 		{
-			c[i + 0].SetStr("スペードの");
-			c[i + 13].SetStr("ハートの");
-			c[i + 26].SetStr("ダイアの");
-			c[i + 39].SetStr("クラブの");
-			c[52].SetStr("ジョーカー");
+			cardList[i + 0].SetStr("スペードの");
+			cardList[i + 13].SetStr("ハートの");
+			cardList[i + 26].SetStr("ダイアの");
+			cardList[i + 39].SetStr("クラブの");
+			cardList[52].SetStr("ジョーカー");
 
-			c[i + 0].SetCardNum(i + 1);
-			c[i + 13].SetCardNum(i + 1);
-			c[i + 26].SetCardNum(i + 1);
-			c[i + 39].SetCardNum(i + 1);
-			c[52].SetCardNum(NULL);
+			cardList[i + 0].SetCardNum(i + 1);
+			cardList[i + 13].SetCardNum(i + 1);
+			cardList[i + 26].SetCardNum(i + 1);
+			cardList[i + 39].SetCardNum(i + 1);
+			cardList[52].SetCardNum(NULL);
 
 		}
-
 	}
 
 	//カード開示
-	int openCard()
+	void OpenCard()
 	{
 		for (int i = 0; i < CARDNUM; i++)
 		{
-			if (c[i].GetStr() == "ジョーカー")
+			if (cardList[i].GetStr() == "ジョーカー")
 			{
-				printf("%s\n", c[i].GetStr().c_str());
+				printf("%s\n", cardList[i].GetStr().c_str());
 			}
 			else
 			{
-				printf("%s%d\n", c[i].GetStr().c_str(), c[i].GetCardNum());
+				printf("%s%d\n", cardList[i].GetStr().c_str(), cardList[i].GetCardNum());
 			}
 		}
-
-		return 0;
 	}
 
 	//シャッフル
-	void shuffle()
+	void Shuffle()
 	{
 		std::random_device std;
 
 		for (int i = 0; i < CARDNUM; i++)
 		{
 			int j = std() % CARDNUM;
-			Card t = c[i];
-			c[i] = c[j];
-			c[j] = t;
+			Card t = cardList[i];
+			cardList[i] = cardList[j];
+			cardList[j] = t;
 		}
 	}
 
 private:
-	Card c[CARDNUM];
+	Card cardList[CARDNUM];
 };
 
 
-int main(void) 
+int main()
 {
 	//第一問
 	//printf("%d\n", 0b1011 + 0b0101);
@@ -156,13 +153,10 @@ int main(void)
 	//Vector2 ve1(5,2);
 	//Vector2 ve2(34,5);
 	//Distance(ve1, ve2);
-	 
+
 	//第十一問
-	Card card[CARDNUM];
 
-	Deck deck(card);
-	deck.shuffle();
-	deck.openCard();
-
+	Deck deck;
+	deck.Shuffle();
+	deck.OpenCard();
 }
-
